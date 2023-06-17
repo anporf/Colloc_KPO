@@ -7,6 +7,10 @@ app = Flask(__name__)
 
 @app.route('/rates', methods=['GET'])
 def get_value():
+    """
+    Это api возвращает список всех возможных курсов валют
+    :return: Список всех курсов
+    """
     select_query = f'''SELECT currency_origin, currency_target, exchange FROM rates ;'''
     data = db_functions.get_from_db(select_query)
     response_data = {
@@ -29,6 +33,10 @@ def get_value():
 
 @app.route('/exchange', methods=["POST"])
 def exchange():
+    """
+    Это api переводит одну валюту, в другую
+    :return: Количество денег в новой валюте
+    """
     currency_origin = str(request.json['currency_origin'])
     currency_target = str(request.json['currency_target'])
     amount = float(request.json['amount'])
